@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CityInfo.API;
+using Microsoft.AspNetCore.Mvc;
+using WebApiPractice.Models;
 
 namespace WebApiPractice.Controllers
 {
@@ -13,14 +15,27 @@ namespace WebApiPractice.Controllers
         // this is used instead of setting up routing. Definitely looks like a better way to do it and much easier to read
         // [HttpGet("api/cities")] - this is how you define a route at the method level
         [HttpGet] // this is how you define a the Get request because the route is defined at controller level
-        public JsonResult GetCities()
+        // public JsonResult GetCities()
+        public ActionResult<IEnumerable<CityDto>> GetCities() // this is the same as above but it is using the ActionResult class
         {
-            return new JsonResult(
-                new List<object>
-                {
-                    new { id = 1, Name = "New York City" },
-                    new { id = 2, Name = "Antwerp" }
-                });
+            return Ok(CitiesDataStore.Current.Cities);
+            // this is no "NotFound() here because the CitiesDataStore.Current.Cities
+            // is a list and will return an empty list if there is nothing in it and that is a valid response
+        }
+
+        [HttpGet("{id}")] // this is showing the use of a parameter in the route
+        //public JsonResult GetCity(int id) // JSONResult implements IActionResult and is an ActionResult
+        public ActionResult<CityDto> GetCity(int id)
+        {
+            // pulls data from the CitiesDataStore. Current is a property of this class
+            var citiesToReturn = CitiesDataStore.Current.Cities.FirstOrDefault(c => c.Id == id);
+
+            if(citiesToReturn == null)
+            {
+                return NotFound(); // this will return a 404 status code
+            }
+
+            return Ok(citiesToReturn); // this will return a 200 status code
         }
     }
 }
