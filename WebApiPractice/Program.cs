@@ -18,7 +18,14 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseRouting(); // this must be added before UseAuthorization()
+
 app.UseAuthorization();
+
+app.UseEndpoints(endpoints => // this must be added after UseRouting()
+{
+    endpoints.MapControllers();
+});
 
 app.MapControllers();
 
