@@ -31,3 +31,7 @@ C:\Users\PaulVidler\Source\Repos\Throwaway\WebAPI-Practice\WebApiPractice\obj\De
 C:\Users\PaulVidler\Source\Repos\Throwaway\WebAPI-Practice\WebApiPractice\obj\Debug\net6.0\WebApiPractice.genruntimeconfig.cache
 C:\Users\PaulVidler\Source\Repos\Throwaway\WebAPI-Practice\WebApiPractice\obj\Debug\net6.0\ref\WebApiPractice.dll
 C:\Users\PaulVidler\Source\Repos\Throwaway\WebAPI-Practice\WebApiPractice\bin\Debug\net6.0\openGIS.pdf
+C:\Users\PaulVidler\Source\Repos\Throwaway\WebAPI-Practice\WebApiPractice\bin\Debug\net6.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\PaulVidler\Source\Repos\Throwaway\WebAPI-Practice\WebApiPractice\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\Users\PaulVidler\Source\Repos\Throwaway\WebAPI-Practice\WebApiPractice\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\PaulVidler\Source\Repos\Throwaway\WebAPI-Practice\WebApiPractice\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll

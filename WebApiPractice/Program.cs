@@ -8,7 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers(options =>
 {
     options.ReturnHttpNotAcceptable = true; // this will return a 406 if the the header is asking for XML or another format that is not JSON
-}).AddXmlDataContractSerializerFormatters(); // adding this extension method will allow the api to return XML as well as JSON
+}).AddNewtonsoftJson()
+  .AddXmlDataContractSerializerFormatters(); // adding this extension method will allow the api to return XML as well as JSON
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -33,7 +34,9 @@ app.UseRouting(); // this must be added before UseAuthorization()
 
 app.UseAuthorization();
 
-app.UseEndpoints(endpoints => // this must be added after UseRouting()
+
+// this must be added after UseRouting()
+app.UseEndpoints(endpoints => 
 {
     endpoints.MapControllers();
 });
