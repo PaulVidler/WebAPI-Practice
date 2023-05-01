@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using WebApiPractice.Models;
 using WebApiPractice.Models.UpdateDtos;
+using WebApiPractice.Services;
 
 namespace WebApiPractice.Controllers
 {
@@ -12,17 +13,50 @@ namespace WebApiPractice.Controllers
 
     public class PointsOfInterestController : ControllerBase
     {
+        
+        private readonly ILogger<PointsOfInterestController> _logger;
+        private readonly IMailService _mailService;
+        private readonly ICitiesDataStore _citiesDataStore;
+
+        public PointsOfInterestController(ILogger<PointsOfInterestController> logger,
+            IMailService mailService,
+            ICitiesDataStore citiesDataStore)
+        {
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _mailService = mailService ?? throw new ArgumentNullException(nameof(mailService));
+            _citiesDataStore = citiesDataStore ?? throw new ArgumentNullException(nameof(citiesDataStore));
+        }
+        
+        
+        
         [HttpGet]
         public ActionResult<IEnumerable<PointOfInterestDto>> GetPointsOfInterest(int cityId)
         {
-            var city = CitiesDataStore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
-
-            if (city == null)
+            try
             {
-                return NotFound();
-            }
+                // throw new Exception("exception sample"); - this is just testiong
+                
+                var city = _citiesDataStore.Cities.FirstOrDefault(c => c.Id == cityId);
 
-            return Ok(city.PointsOfInterest);
+                if (city == null)
+                {
+                    _logger.LogInformation($"City with id {cityId} was not found when accessing points of interest");
+                    return NotFound();
+                }
+
+                return Ok(city.PointsOfInterest);
+            }
+            catch (Exception ex)
+            {
+                // because this is an exception, it will be logged as critical
+                _logger.LogCritical($"Exception while getting points of interest for city with id {cityId}", ex);
+
+                // instead of just throwing the exception, we are returning a status code and a message. It is important not
+                // to return the exception message because it could contain sensitive information. Keep it simple
+                return StatusCode(500, "A problem happened while handling your request"); 
+            }
+            
+            
 
         }
 
@@ -30,7 +64,7 @@ namespace WebApiPractice.Controllers
         public ActionResult<PointOfInterestDto> GetPointOfInterest(int cityId, int pointofinterestid)
         {
             // find the city
-            var city = CitiesDataStore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
+            var city = _citiesDataStore.Cities.FirstOrDefault(c => c.Id == cityId);
             // check if the city exists
             if (city == null)
             {
@@ -59,14 +93,14 @@ namespace WebApiPractice.Controllers
             //}
 
 
-            var city = CitiesDataStore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
+            var city = _citiesDataStore.Cities.FirstOrDefault(c => c.Id == cityId);
             if (city == null)
             {
                 return NotFound();
             }
 
             // demo purposes only, will be imporved later in the course
-            var maxPointOfInterestId = CitiesDataStore.Current.Cities.SelectMany(c => c.PointsOfInterest).Max(p => p.Id);
+            var maxPointOfInterestId = _citiesDataStore.Cities.SelectMany(c => c.PointsOfInterest).Max(p => p.Id);
 
             var finalPointOfInterest = new PointOfInterestDto()
             {
@@ -91,7 +125,7 @@ namespace WebApiPractice.Controllers
         {
             
             // find the city
-            var city = CitiesDataStore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
+            var city = _citiesDataStore.Cities.FirstOrDefault(c => c.Id == cityId);
             // check if the city exists
             if (city == null)
             {
@@ -116,7 +150,7 @@ namespace WebApiPractice.Controllers
         public ActionResult PartiallyUpdatePointOfInterest(int cityId, int pointOfInterestId, JsonPatchDocument<PointOfInterestForUpdateDto> patchDocument)
         {
             // find the city
-            var city = CitiesDataStore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
+            var city = _citiesDataStore.Cities.FirstOrDefault(c => c.Id == cityId);
             // check if the city exists
             if (city == null)
             {
@@ -158,7 +192,7 @@ namespace WebApiPractice.Controllers
         public ActionResult DeletePointOfInterest(int cityId, int pointOfInterestId)
         {
             // find the city
-            var city = CitiesDataStore.Current.Cities.FirstOrDefault(c => c.Id == cityId);
+            var city = _citiesDataStore.Cities.FirstOrDefault(c => c.Id == cityId);
             // check if the city exists
             if (city == null)
             {
@@ -173,7 +207,12 @@ namespace WebApiPractice.Controllers
             }
             // delete the point of interest
             city.PointsOfInterest.Remove(pointOfInterestFromStore);
-            // return the point of interest
+            
+            // send an email to the user to confirm the deletion
+            _mailService.Send("Point of interest deleted.", 
+                $"Point of interest {pointOfInterestFromStore.Name}" +
+                $" with id {pointOfInterestFromStore.Id} was deleted.");
+
             return NoContent();
         }
     }

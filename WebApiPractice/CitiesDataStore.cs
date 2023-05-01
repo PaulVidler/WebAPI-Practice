@@ -2,10 +2,12 @@
 
 namespace CityInfo.API
 {
-    public class CitiesDataStore
+    public class CitiesDataStore : ICitiesDataStore
     {
         public List<CityDto> Cities { get; set; }
-        public static CitiesDataStore Current { get; } = new CitiesDataStore();
+
+        // we can get rid of this static implementation of CitiesDataStore as it is really just a singleton
+        // public static CitiesDataStore Current { get; } = new CitiesDataStore();
 
         public CitiesDataStore()
         {

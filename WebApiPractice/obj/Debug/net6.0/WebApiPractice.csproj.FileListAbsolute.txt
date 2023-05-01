@@ -35,3 +35,8 @@ C:\Users\PaulVidler\Source\Repos\Throwaway\WebAPI-Practice\WebApiPractice\bin\De
 C:\Users\PaulVidler\Source\Repos\Throwaway\WebAPI-Practice\WebApiPractice\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\Users\PaulVidler\Source\Repos\Throwaway\WebAPI-Practice\WebApiPractice\bin\Debug\net6.0\Newtonsoft.Json.dll
 C:\Users\PaulVidler\Source\Repos\Throwaway\WebAPI-Practice\WebApiPractice\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
+C:\Users\PaulVidler\Source\Repos\Throwaway\WebAPI-Practice\WebApiPractice\bin\Debug\net6.0\Serilog.dll
+C:\Users\PaulVidler\Source\Repos\Throwaway\WebAPI-Practice\WebApiPractice\bin\Debug\net6.0\Serilog.Extensions.Hosting.dll
+C:\Users\PaulVidler\Source\Repos\Throwaway\WebAPI-Practice\WebApiPractice\bin\Debug\net6.0\Serilog.Extensions.Logging.dll
+C:\Users\PaulVidler\Source\Repos\Throwaway\WebAPI-Practice\WebApiPractice\bin\Debug\net6.0\Serilog.Sinks.Console.dll
+C:\Users\PaulVidler\Source\Repos\Throwaway\WebAPI-Practice\WebApiPractice\bin\Debug\net6.0\Serilog.Sinks.File.dll

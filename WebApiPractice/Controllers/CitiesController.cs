@@ -12,13 +12,24 @@ namespace WebApiPractice.Controllers
     // [Route("api/[controller]")] - this is how you define a route at the controller level using the name of the controller by default
     public class CitiesController : ControllerBase
     {
+        
+        // constructor
+        private readonly ICitiesDataStore _citiesDataStore;
+
+        public CitiesController(ICitiesDataStore citiesDataStore)
+        {
+            _citiesDataStore = citiesDataStore;
+        }
+        
+        
+        
         // this is used instead of setting up routing. Definitely looks like a better way to do it and much easier to read
         // [HttpGet("api/cities")] - this is how you define a route at the method level
         [HttpGet] // this is how you define a the Get request because the route is defined at controller level
         // public JsonResult GetCities()
         public ActionResult<IEnumerable<CityDto>> GetCities() // this is the same as above but it is using the ActionResult class
         {
-            return Ok(CitiesDataStore.Current.Cities);
+            return Ok(_citiesDataStore.Cities);
             // this is no "NotFound() here because the CitiesDataStore.Current.Cities
             // is a list and will return an empty list if there is nothing in it and that is a valid response
         }
@@ -28,7 +39,7 @@ namespace WebApiPractice.Controllers
         public ActionResult<CityDto> GetCity(int id)
         {
             // pulls data from the CitiesDataStore. Current is a property of this class
-            var citiesToReturn = CitiesDataStore.Current.Cities.FirstOrDefault(c => c.Id == id);
+            var citiesToReturn = _citiesDataStore.Cities.FirstOrDefault(c => c.Id == id);
 
             if(citiesToReturn == null)
             {
