@@ -60,7 +60,8 @@ builder.Services.AddSingleton<FileExtensionContentTypeProvider>();
 // add the data store to the DI container
 builder.Services.AddSingleton<ICitiesDataStore, CitiesDataStore>();
 
-builder.Services.AddDbContext<CityInfoContext>(dbContextOptions => dbContextOptions.UseSqlServer("Server=localhost;Database=CityInfo;Trusted_Connection=True;"));
+builder.Services.AddDbContext<CityInfoContext>(dbContextOptions => dbContextOptions.UseSqlServer(
+    builder.Configuration["ConnectionStrings:CityInfoDBConnectionString"]));
 
 
 var app = builder.Build();

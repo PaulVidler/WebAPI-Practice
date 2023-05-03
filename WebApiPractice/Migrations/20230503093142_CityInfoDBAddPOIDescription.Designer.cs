@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApiPractice.DbContexts;
 
@@ -10,9 +11,10 @@ using WebApiPractice.DbContexts;
 namespace WebApiPractice.Migrations
 {
     [DbContext(typeof(CityInfoContext))]
-    partial class CityInfoContextModelSnapshot : ModelSnapshot
+    [Migration("20230503093142_CityInfoDBAddPOIDescription")]
+    partial class CityInfoDBAddPOIDescription
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,26 +43,6 @@ namespace WebApiPractice.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Cities");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "The one with that big park.",
-                            Name = "New York City"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "The one with the cathedral that was never really finished.",
-                            Name = "Antwerp"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Description = "The one with that big tower.",
-                            Name = "Paris"
-                        });
                 });
 
             modelBuilder.Entity("WebApiPractice.Entities.PointOfInterest", b =>
@@ -88,50 +70,6 @@ namespace WebApiPractice.Migrations
                     b.HasIndex("CityId");
 
                     b.ToTable("PointsOfInterest");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CityId = 3,
-                            Description = "A wrought iron lattice tower on the Champ de Mars, named after engineer Gustave Eiffel.",
-                            Name = "Eiffel Tower"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CityId = 3,
-                            Description = "The world's largest museum.",
-                            Name = "The Louvre"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CityId = 1,
-                            Description = "Big Park in the USA",
-                            Name = "Central Park"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CityId = 1,
-                            Description = "TBig building in the USA",
-                            Name = "Empire State Building"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CityId = 2,
-                            Description = "A Gothic style cathedral, conceived by architects Jan and Pieter Appelmans.",
-                            Name = "Cathedral of Our Lady"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            CityId = 2,
-                            Description = "The the finest example of railway architecture in Belgium.",
-                            Name = "Antwerp Central Station"
-                        });
                 });
 
             modelBuilder.Entity("WebApiPractice.Entities.PointOfInterest", b =>
