@@ -1,6 +1,8 @@
 using CityInfo.API;
 using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
+using WebApiPractice.DbContexts;
 using WebApiPractice.Services;
 
 // these packages were added for logging
@@ -57,6 +59,8 @@ builder.Services.AddSingleton<FileExtensionContentTypeProvider>();
 
 // add the data store to the DI container
 builder.Services.AddSingleton<ICitiesDataStore, CitiesDataStore>();
+
+builder.Services.AddDbContext<CityInfoContext>(dbContextOptions => dbContextOptions.UseSqlServer("Server=localhost;Database=CityInfo;Trusted_Connection=True;"));
 
 
 var app = builder.Build();
