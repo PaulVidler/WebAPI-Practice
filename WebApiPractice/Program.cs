@@ -63,6 +63,9 @@ builder.Services.AddSingleton<ICitiesDataStore, CitiesDataStore>();
 builder.Services.AddDbContext<CityInfoContext>(dbContextOptions => dbContextOptions.UseSqlServer(
     builder.Configuration["ConnectionStrings:CityInfoDBConnectionString"]));
 
+builder.Services.AddScoped<ICityInfoRepository, CityInfoRepository>(); // we will use AddScoped here so it is created once per request. Note the interface implementation
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies()); // this will scan the assemblies for any profiles
 
 var app = builder.Build();
 

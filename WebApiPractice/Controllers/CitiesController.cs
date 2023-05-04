@@ -1,6 +1,8 @@
-﻿using CityInfo.API;
+﻿using AutoMapper;
+using CityInfo.API;
 using Microsoft.AspNetCore.Mvc;
 using WebApiPractice.Models;
+using WebApiPractice.Services;
 
 namespace WebApiPractice.Controllers
 {
@@ -14,11 +16,13 @@ namespace WebApiPractice.Controllers
     {
         
         // constructor
-        private readonly ICitiesDataStore _citiesDataStore;
+        private readonly ICityInfoRepository _cityInfoRepository;
+        private readonly IMapper _mapper;
 
-        public CitiesController(ICitiesDataStore citiesDataStore)
+        public CitiesController(ICityInfoRepository cityInfoRepository, IMapper mapper)
         {
-            _citiesDataStore = citiesDataStore;
+            _cityInfoRepository = cityInfoRepository ?? throw new System.ArgumentNullException(nameof(cityInfoRepository));
+            _mapper = mapper ?? throw new System.ArgumentNullException(nameof(mapper));
         }
         
         
@@ -27,26 +31,32 @@ namespace WebApiPractice.Controllers
         // [HttpGet("api/cities")] - this is how you define a route at the method level
         [HttpGet] // this is how you define a the Get request because the route is defined at controller level
         // public JsonResult GetCities()
-        public ActionResult<IEnumerable<CityDto>> GetCities() // this is the same as above but it is using the ActionResult class
+        public async Task<ActionResult<IEnumerable<CityWithoutPointsOfInterestDto>>> GetCities() // this is the same as above but it is using the ActionResult class
         {
-            return Ok(_citiesDataStore.Cities);
+            //return Ok(_citiesDataStore.Cities);
             // this is no "NotFound() here because the CitiesDataStore.Current.Cities
             // is a list and will return an empty list if there is nothing in it and that is a valid response
+
+            // new implementation using repoistory
+            var cityEntities = await _cityInfoRepository.GetCitiesAsync();
+
+            return Ok(_mapper.Map<IEnumerable<CityWithoutPointsOfInterestDto>>(cityEntities));
+
         }
 
-        [HttpGet("{id}")] // this is showing the use of a parameter in the route
-        //public JsonResult GetCity(int id) // JSONResult implements IActionResult and is an ActionResult
-        public ActionResult<CityDto> GetCity(int id)
-        {
-            // pulls data from the CitiesDataStore. Current is a property of this class
-            var citiesToReturn = _citiesDataStore.Cities.FirstOrDefault(c => c.Id == id);
+    //    [HttpGet("{id}")] // this is showing the use of a parameter in the route
+    //    //public JsonResult GetCity(int id) // JSONResult implements IActionResult and is an ActionResult
+    //    public ActionResult<CityDto> GetCity(int id)
+    //    {
+    //        // pulls data from the CitiesDataStore. Current is a property of this class
+    //        var citiesToReturn = _citiesDataStore.Cities.FirstOrDefault(c => c.Id == id);
 
-            if(citiesToReturn == null)
-            {
-                return NotFound(); // this will return a 404 status code
-            }
+    //        if(citiesToReturn == null)
+    //        {
+    //            return NotFound(); // this will return a 404 status code
+    //        }
 
-            return Ok(citiesToReturn); // this will return a 200 status code
-        }
+    //        return Ok(citiesToReturn); // this will return a 200 status code
+    //    }
     }
 }

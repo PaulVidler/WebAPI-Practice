@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "U/TZw0mekl6Dbo5DKdYGLbFgb1brwFiwWq4ywXPZ/bhrJUdD8eZVXb7GuiZDvuKmB4aCa8op47SnhwVBIdvvCA==",
+  "dgSpecHash": "pg5snTrt18WUuINascgtXY6CsAK1Uas2hr4Mkbo3osVbWR8xNJSs3OHddqRrDE70wKkptpN5vxjwXjFfbQGOBA==",
   "success": true,
   "projectFilePath": "C:\\Users\\PaulVidler\\Source\\Repos\\Throwaway\\WebAPI-Practice\\WebApiPractice\\WebApiPractice.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\PaulVidler\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
+    "C:\\Users\\PaulVidler\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.1\\automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512",
     "C:\\Users\\PaulVidler\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\PaulVidler\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\7.0.5\\microsoft.aspnetcore.jsonpatch.7.0.5.nupkg.sha512",
     "C:\\Users\\PaulVidler\\.nuget\\packages\\microsoft.aspnetcore.mvc.newtonsoftjson\\6.0.10\\microsoft.aspnetcore.mvc.newtonsoftjson.6.0.10.nupkg.sha512",
@@ -55,6 +57,7 @@
     "C:\\Users\\PaulVidler\\.nuget\\packages\\system.diagnostics.diagnosticsource\\6.0.0\\system.diagnostics.diagnosticsource.6.0.0.nupkg.sha512",
     "C:\\Users\\PaulVidler\\.nuget\\packages\\system.drawing.common\\4.7.0\\system.drawing.common.4.7.0.nupkg.sha512",
     "C:\\Users\\PaulVidler\\.nuget\\packages\\system.identitymodel.tokens.jwt\\6.8.0\\system.identitymodel.tokens.jwt.6.8.0.nupkg.sha512",
+    "C:\\Users\\PaulVidler\\.nuget\\packages\\system.reflection.emit\\4.7.0\\system.reflection.emit.4.7.0.nupkg.sha512",
     "C:\\Users\\PaulVidler\\.nuget\\packages\\system.runtime.caching\\4.7.0\\system.runtime.caching.4.7.0.nupkg.sha512",
     "C:\\Users\\PaulVidler\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
     "C:\\Users\\PaulVidler\\.nuget\\packages\\system.security.accesscontrol\\4.7.0\\system.security.accesscontrol.4.7.0.nupkg.sha512",
