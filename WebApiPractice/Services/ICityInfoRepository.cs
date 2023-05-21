@@ -10,8 +10,14 @@ namespace WebApiPractice.Services
         Task<City?> GetCityAsync(int cityId, bool includePointsOfInterest); //  we make this nullable as it's possible to request a city that doesn't exist
 
         Task<IEnumerable<PointOfInterest>> GetPointsOfInterestForCityAsync(int cityId);
+        
+        Task<bool> CityExistsAsync(int cityId);
 
         Task<PointOfInterest?> GetPointOfInterestForCityAsync(int CityId, int pointOfInterestId);
+
+        Task AddPointOfInterestForCityAsync(int CityId, PointOfInterest pointOfInterest);
+
+        Task<bool> SaveChangesAsync();
 
     }
 }

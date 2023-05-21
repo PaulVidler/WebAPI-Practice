@@ -29,6 +29,12 @@ namespace WebApiPractice.Services
             return await _context.Cities.FirstOrDefaultAsync(c => c.Id == cityId);
         }
 
+        // this one is checking if the city exists,
+        public async Task<bool> CityExistsAsync(int cityId)
+        {
+            return await _context.Cities.AnyAsync(c => c.Id == cityId);
+        }
+
         public async Task<PointOfInterest?> GetPointOfInterestForCityAsync(int CityId, int pointOfInterestId)
         {
             return await _context.PointsOfInterest.FirstOrDefaultAsync(p => p.CityId == CityId && p.Id == pointOfInterestId);
@@ -38,5 +44,17 @@ namespace WebApiPractice.Services
         {
             return await _context.PointsOfInterest.Where(p => p.CityId == cityId).ToListAsync();
         }
+
+        public async Task AddPointOfInterestForCityAsync(int CityId, PointOfInterest pointOfInterest)
+        {
+            var city = await GetCityAsync(CityId, false);
+            city?.PointsOfInterest.Add(pointOfInterest);
+        }
+
+        public async Task<bool> SaveChangesAsync()
+        {
+            return (await _context.SaveChangesAsync() >= 0); // returns true if 1 or more entities were changed
+        }
+
     }
 }

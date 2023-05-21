@@ -44,19 +44,35 @@ namespace WebApiPractice.Controllers
 
         }
 
-    //    [HttpGet("{id}")] // this is showing the use of a parameter in the route
-    //    //public JsonResult GetCity(int id) // JSONResult implements IActionResult and is an ActionResult
-    //    public ActionResult<CityDto> GetCity(int id)
-    //    {
-    //        // pulls data from the CitiesDataStore. Current is a property of this class
-    //        var citiesToReturn = _citiesDataStore.Cities.FirstOrDefault(c => c.Id == id);
+        [HttpGet("{id}")] // this is showing the use of a parameter in the route
+        //public JsonResult GetCity(int id) // JSONResult implements IActionResult and is an ActionResult
+        // in this one, we're using an IActionResult as there could actually be 2 different return types based on the logic below
+        public async Task<IActionResult> GetCity(int id, bool includePointsOfInterest = false)
+        {
+            //// pulls data from the CitiesDataStore. Current is a property of this class
+            //var citiesToReturn = _citiesDataStore.Cities.FirstOrDefault(c => c.Id == id);
 
-    //        if(citiesToReturn == null)
-    //        {
-    //            return NotFound(); // this will return a 404 status code
-    //        }
+            //if (citiesToReturn == null)
+            //{
+            //    return NotFound(); // this will return a 404 status code
+            //}
 
-    //        return Ok(citiesToReturn); // this will return a 200 status code
-    //    }
+            //return Ok(citiesToReturn); // this will return a 200 status code
+
+            var city = await _cityInfoRepository.GetCityAsync(id, includePointsOfInterest);
+
+            if (city == null)
+            {
+                return NotFound(); // this will return a 404 status code
+            }
+
+            if (includePointsOfInterest)
+            {
+                return Ok(_mapper.Map<CityDto>(city));
+            }
+
+            return Ok(_mapper.Map<CityWithoutPointsOfInterestDto>(city));
+
+        }
     }
 }
